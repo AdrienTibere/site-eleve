@@ -1,0 +1,19 @@
+#exercices-list a {
+  color: white;
+}
+
+#exercices-list li {
+  line-height: 80px;
+  font-size: 20px;
+  list-style-type: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+}
+
+#exercices-list ul a li { background: #2196F3; }
+#exercices-list ul a:nth-child(odd) li { opacity: 0.65; }
+
+#exercices-list .exercice-name {
+  margin-left: 50px;
+}

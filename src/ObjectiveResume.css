@@ -1,0 +1,16 @@
+#objectives a {
+  color: white;
+}
+
+#objectives li {
+  line-height: 80px;
+  font-size: 20px;
+  list-style-type: none;
+  cursor: pointer;
+  padding: 10px;
+  margin: 5px;
+}
+
+#objectives ul a li { background: #2196F3; }
+#objectives ul a:nth-child(odd) li { opacity: 0.65; }
+

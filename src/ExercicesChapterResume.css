@@ -1,0 +1,14 @@
+.exercice-resume {
+  vertical-align: middle;
+  background-color: black;
+  height: 200px;
+  display: inline-block;
+  padding: 20px;
+  color: #eceff1;
+  cursor: pointer;
+  width: 30%;
+  margin: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
