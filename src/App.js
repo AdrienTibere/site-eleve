@@ -1,14 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, navigateTo } from 'react';
 import './App.css';
 import Appbar from 'muicss/lib/react/appbar';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import ExercicesChaptersList from './ExercicesChaptersList.js';
 import Container from 'muicss/lib/react/container';
 import Exercice from './Exercice.js';
 import ObjectivesByChapter from './ObjectivesByChapter.js';
 import ExercicesByObjective from './ExercicesByObjective.js';
+import Button from 'muicss/lib/react/button';
+import EnsureLoggedInContainer from './EnsureLoggedIn.js';
+import {connect} from 'react-redux';
 
 class App extends Component {
+  componentDidUpdate(prevProps) {
+    const { dispatch, redirectUrl } = this.props
+    const isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn
+    const isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn
+
+    if (isLoggingIn) {
+      dispatch(navigateTo(redirectUrl))
+    } else if (isLoggingOut) {
+      // do any kind of cleanup or post-logout redirection here
+    }
+  }
+
   render() {
     let s2 = {color: 'white', 'font-size': '18px'};
 
@@ -35,13 +50,20 @@ class App extends Component {
           <Route exact={true} path="/" render={() => (
             <div>
               <div className="mui--text-display4 welcome">Bienvenue !</div>
-              <div className="mui--text-display1 welcome">Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs pour les élèves de lycée</div>
+              <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
+              <div style={{textAlign: "center"}}>
+                <Button color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
+              </div>
             </div>
           )}/>
-          <Route exact={true} path="/exercices/" component={ExercicesChaptersList}/>
-          <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
-          <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
-          <Route exact={true} path="/exercices/:exId" component={Exercice}/>
+					<Route state="isLoggedIn: false" component={EnsureLoggedInContainer}>
+            <Switch>
+              <Route exact={true} path="/exercices/" component={ExercicesChaptersList}/>
+              <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
+              <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
+              <Route exact={true} path="/exercices/:exId" component={Exercice}/>
+            </Switch>
+					</Route>
           </Container>
         </div>
       </div>
@@ -50,4 +72,12 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.loggedIn,
+    redirectUrl: state.redirectUrl
+  }
+}
+
+export default connect(mapStateToProps)(App);
+//export default App;

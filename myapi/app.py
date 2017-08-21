@@ -1,6 +1,7 @@
 from flask import Flask, json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import DeclarativeMeta
+from flask_mail import Mail
 from flask_cors import CORS
 
 class AlchemyEncoder(json.JSONEncoder):
@@ -24,4 +25,5 @@ CORS(app)
 app.json_encoder = AlchemyEncoder
 app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
+mail = Mail(app)
 
