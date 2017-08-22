@@ -14,9 +14,12 @@ class EnsureLoggedInContainer extends React.Component {
   }
 
   render() {
-		console.log(this.props);
     if (!this.props.isLoggedIn) {
-      return this.props.children
+      return (
+        <div>
+        {this.props.children}
+        </div>
+      )
     } else {
       return null
     }
@@ -25,8 +28,7 @@ class EnsureLoggedInContainer extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    isLoggedIn: state.isLoggedIn,
-    currentURL: ownProps.location.pathname
+    isLoggedIn: state.isLoggedIn
   }
 }
 

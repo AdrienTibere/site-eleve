@@ -1,7 +1,7 @@
 import React, { Component, navigateTo } from 'react';
 import './App.css';
 import Appbar from 'muicss/lib/react/appbar';
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import ExercicesChaptersList from './ExercicesChaptersList.js';
 import Container from 'muicss/lib/react/container';
 import Exercice from './Exercice.js';
@@ -38,7 +38,7 @@ class App extends Component {
                 <td className="mui--appbar-height" > 
                   <Link to={'/'} style={s2}>Accueil</Link> </td>
                 <td className="mui--appbar-height" >
-                  <Link to={'/exercices/'} style={s2}>Exercices</Link>
+                  <Link to={'/exercices'} style={s2}>Exercices</Link>
                 </td>
               </tr>
             </tbody>
@@ -47,23 +47,28 @@ class App extends Component {
         </Appbar>
         <div id="main">
           <Container>
-          <Route exact={true} path="/" render={() => (
-            <div>
-              <div className="mui--text-display4 welcome">Bienvenue !</div>
-              <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
-              <div style={{textAlign: "center"}}>
-                <Button color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
-              </div>
-            </div>
-          )}/>
-					<Route state="isLoggedIn: false" component={EnsureLoggedInContainer}>
             <Switch>
-              <Route exact={true} path="/exercices/" component={ExercicesChaptersList}/>
-              <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
-              <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
-              <Route exact={true} path="/exercices/:exId" component={Exercice}/>
+              <Route exact={true} path="/" render={() => (
+                <div>
+                  <div className="mui--text-display4 welcome">Bienvenue !</div>
+                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
+                  <div style={{textAlign: "center"}}>
+                    <Button color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
+                  </div>
+                </div>
+              )}/>
+              <EnsureLoggedInContainer>
+                <Route exact={true} path="/exercices" component={ExercicesChaptersList}/>
+                <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
+                <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
+                <Route exact={true} path="/exercices/:exId" component={Exercice}/>
+              </EnsureLoggedInContainer>
+              <Route render={() => (
+                <div>
+                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Cette page n'existe pas !</div>
+                </div>
+              )}/>
             </Switch>
-					</Route>
           </Container>
         </div>
       </div>
