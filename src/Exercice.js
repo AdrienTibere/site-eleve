@@ -4,6 +4,7 @@ import './Exercice.css';
 import Button from 'muicss/lib/react/button';
 import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
+import refresh from './images/refresh.png';
 
 class Exercice extends Component {
   constructor(props) {
@@ -26,13 +27,16 @@ class Exercice extends Component {
       solution: "",
       displaySol: false
     };
+
+    this.newExercice = this.newExercice.bind(this);
   }
 
   showSolution() {
     this.setState({displaySol: true});
   }
 
-  componentDidMount() {
+  newExercice() {
+    this.setState({displaySol: false});
     fetch(server_url + 'api/exercice/' + this.props.match.params.exId)
     .then(response => response.json())
     .then((exercice) => {
@@ -52,6 +56,10 @@ class Exercice extends Component {
     });
   }
 
+  componentDidMount() {
+    this.newExercice();
+  }
+
   render() {
     return (
       <div id="exercice">
@@ -66,7 +74,10 @@ class Exercice extends Component {
         <div className="big-title" style={{color: this.state.chapter.color}}>{this.state.exercice.name}</div>
         <h1>Difficulté : {this.state.exercice.difficulty}</h1>
         <div id="statement" style={{borderColor: this.state.chapter.color}}>
-          <h1>Énoncé :</h1>
+          <h1 style={{display:'inline-block'}}>Énoncé :</h1> 
+          <div style={{display: 'inline-block', marginLeft: '20px', cursor: 'pointer'}}>
+            <img onClick={this.newExercice} height="30px" src={refresh} alt="img-Relancer" title="Un autre énoncé svp !"/>
+          </div>
           <div dangerouslySetInnerHTML={{__html: this.state.statement}}></div>
           <br/>
           <Button color="primary" onClick={this.showSolution} style={{display: this.state.displaySol ? 'none' : ''}}>J'ai fini et je veux voir la solution</Button>
@@ -82,6 +93,9 @@ class Exercice extends Component {
               <Button color="primary">J'y étais presque..!</Button>
               <Button color="primary" style={{backgroundColor: "#4CAF50"}}>Oui, parfaitement</Button>
             </div>
+          </div>
+          <div style={{textAlign: 'center', marginTop: '10px'}}>
+            <Button color="primary" onClick={this.newExercice}>Je veux en faire un autre !</Button>
           </div>
         </div>
       </div>
