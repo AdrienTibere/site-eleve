@@ -52,7 +52,7 @@ class App extends Component {
                 <div>
                   <div className="mui--text-display4 welcome">Bienvenue !</div>
                   <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
-                  <div style={{textAlign: "center"}}>
+                  <div style={{textAlign: "center", display:'none'}}>
                     <Button color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
                   </div>
                 </div>
