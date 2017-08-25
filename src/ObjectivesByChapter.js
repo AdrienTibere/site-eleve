@@ -37,7 +37,7 @@ class ObjectivesByChapter extends Component {
     let rows = [];
     this.state.objectives.forEach((obj) => {
       rows.push(
-        <ObjectiveResume obj={obj} chapter={this.state.chapter} color={this.state.chapter.color}></ObjectiveResume>
+        <ObjectiveResume key={obj.id} obj={obj} chapter={this.state.chapter} color={this.state.chapter.color}></ObjectiveResume>
       )
     });
 

@@ -39,7 +39,7 @@ class ExercicesByObjective extends Component {
     let rows = [];
     this.state.exercices.forEach((exercice) => {
       rows.push(
-        <ExerciceResume exercice={exercice} chapter={this.state.chapter} obj={this.state.objective}></ExerciceResume>
+        <ExerciceResume key={exercice.id} exercice={exercice} chapter={this.state.chapter} obj={this.state.objective}></ExerciceResume>
       )
     });
 

@@ -20,7 +20,7 @@ class ExercicesChaptersList extends Component {
     let rows = [];
     this.state.chapters.forEach((chapter) => {
       rows.push(
-        <ExercicesChapterResume chapter={chapter}></ExercicesChapterResume>
+        <ExercicesChapterResume key={chapter.id} chapter={chapter}></ExercicesChapterResume>
       )
     });
 
