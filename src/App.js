@@ -1,4 +1,4 @@
-import React, { Component, navigateTo } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Appbar from 'muicss/lib/react/appbar';
 import { HashRouter as Router, Link, Route, Switch } from 'react-router-dom';
@@ -10,22 +10,29 @@ import ExercicesByObjective from './ExercicesByObjective.js';
 import Button from 'muicss/lib/react/button';
 import EnsureLoggedInContainer from './EnsureLoggedIn.js';
 import {connect} from 'react-redux';
+import {fetchLogIn} from './actions'
 
 class App extends Component {
-  componentDidUpdate(prevProps) {
-    const { dispatch, redirectUrl } = this.props
-    const isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn
-    const isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchLogIn())
+    .then(() => console.log(this.props))
+  }
 
-    if (isLoggingIn) {
-      dispatch(navigateTo(redirectUrl))
-    } else if (isLoggingOut) {
+  componentDidUpdate(prevProps) {
+    //how to setup login and logout
+    //const { dispatch, redirectUrl } = this.props
+    //const isLoggingOut = prevProps.isLoggedIn && !this.props.isLoggedIn
+    //const isLoggingIn = !prevProps.isLoggedIn && this.props.isLoggedIn
+    //if (isLoggingIn) {
+      //dispatch(navigateTo(redirectUrl))
+    //} else if (isLoggingOut) {
       // do any kind of cleanup or post-logout redirection here
-    }
+    //}
   }
 
   render() {
-    let s2 = {color: 'white', 'font-size': '18px'};
+    let s2 = {color: 'white', fontSize: '18px'};
 
     return (
       <Router>
@@ -79,8 +86,9 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.loggedIn,
-    redirectUrl: state.redirectUrl
+    isLoggedIn: state.isLoggedIn,
+    redirectUrl: state.redirectUrl,
+    user: state.user
   }
 }
 

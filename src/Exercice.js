@@ -5,6 +5,7 @@ import Button from 'muicss/lib/react/button';
 import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
 import refresh from './images/refresh.png';
+import fetch from 'isomorphic-fetch';
 
 class Exercice extends Component {
   constructor(props) {
