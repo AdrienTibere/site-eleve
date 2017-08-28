@@ -39,13 +39,13 @@ class App extends Component {
           <Container>
           <table width="100%">
             <tbody>
-              <tr>
+              <tr style={{verticalAlign: "middle"}}>
                 <td className="mui--appbar-height" > 
-                  <Link to={'/'} style={s2}>Accueil</Link> </td>
-                <td className="mui--appbar-height" >
+                  <Link to={'/'} style={s2}>Accueil</Link> 
+                  <span style={{marginLeft: "30px"}}/>
                   <Link to={'/exercices'} style={s2}>Exercices</Link>
                 </td>
-                <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none"}}>
+                <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none", textAlign: "right"}}>
                   <span style={s2}>{this.props.user?this.props.user.username:""}</span>
                 </td>
               </tr>
