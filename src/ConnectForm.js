@@ -33,6 +33,7 @@ class ConnectForm extends Component {
         this.setState({displayError: false});
         this.props.display();
         this.props.dispatch(logIn(json.user));
+        localStorage.setItem('authUserToken', JSON.stringify(json.user));
       }
       else {
         this.setState({displayError: true});

@@ -17,6 +17,14 @@ export function setRedirectUrl(newUrl = '/') {
   }
 }
 
+export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user: user
+  }
+}
+
 export const REQUEST_LOG_IN = 'REQUEST_LOG_IN'
 function requestLogIn() {
   return {

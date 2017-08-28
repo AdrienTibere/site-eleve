@@ -8,6 +8,7 @@ import mainReducer from './reducers.js'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
+import { authenticateUser } from './actions.js'
 
 let log = false;
 const loggerMiddleware = createLogger()
@@ -26,6 +27,11 @@ if (log) {
       loggerMiddleware // neat middleware that logs actions
     )
   )
+}
+
+const token = localStorage.getItem('authUserToken');
+if (token) {
+  store.dispatch(authenticateUser(JSON.parse(token)));
 }
 
 ReactDOM.render(

@@ -1,4 +1,4 @@
-import {LOG_IN, SET_REDIRECT_URL, REQUEST_LOG_IN, RECEIVE_LOG_IN} from './actions.js';
+import {LOG_IN, SET_REDIRECT_URL, REQUEST_LOG_IN, RECEIVE_LOG_IN, AUTHENTICATE_USER} from './actions.js';
 
 const initialState = {
   user: null,
@@ -16,6 +16,10 @@ function mainReducer(state = initialState, action) {
     case SET_REDIRECT_URL:
       return Object.assign({}, state, {
         redirectUrl: action.newUrl
+      })
+    case AUTHENTICATE_USER:
+      return Object.assign({}, state, {
+        user: action.user
       })
 		case REQUEST_LOG_IN:
 			return Object.assign({}, state, {
