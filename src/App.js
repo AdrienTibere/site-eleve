@@ -7,16 +7,14 @@ import Container from 'muicss/lib/react/container';
 import Exercice from './Exercice.js';
 import ObjectivesByChapter from './ObjectivesByChapter.js';
 import ExercicesByObjective from './ExercicesByObjective.js';
-import Button from 'muicss/lib/react/button';
-import EnsureLoggedInContainer from './EnsureLoggedIn.js';
 import {connect} from 'react-redux';
-import {fetchLogIn} from './actions'
+//import {fetchLogIn} from './actions'
+import ConnectOrRegister from './ConnectOrRegister.js'
 
 class App extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchLogIn())
-    .then(() => console.log(this.props))
+    //const { dispatch } = this.props;
+    //dispatch(fetchLogIn());
   }
 
   componentDidUpdate(prevProps) {
@@ -47,6 +45,9 @@ class App extends Component {
                 <td className="mui--appbar-height" >
                   <Link to={'/exercices'} style={s2}>Exercices</Link>
                 </td>
+                <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none"}}>
+                  <span style={s2}>{this.props.user?this.props.user.username:""}</span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -59,17 +60,13 @@ class App extends Component {
                 <div>
                   <div className="mui--text-display4 welcome">Bienvenue !</div>
                   <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
-                  <div style={{textAlign: "center", display:'none'}}>
-                    <Button color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
-                  </div>
+                  <ConnectOrRegister/>
                 </div>
               )}/>
-              <EnsureLoggedInContainer>
-                <Route exact={true} path="/exercices" component={ExercicesChaptersList}/>
-                <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
-                <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
-                <Route exact={true} path="/exercices/:exId" component={Exercice}/>
-              </EnsureLoggedInContainer>
+              <Route exact={true} path="/exercices" component={ExercicesChaptersList}/>
+              <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
+              <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
+              <Route exact={true} path="/exercices/:exId" component={Exercice}/>
               <Route render={() => (
                 <div>
                   <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Cette page n'existe pas !</div>

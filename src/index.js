@@ -9,15 +9,24 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
 
+let log = false;
 const loggerMiddleware = createLogger()
 
 let store = createStore(
   mainReducer,
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
-//    loggerMiddleware // neat middleware that logs actions
   )
 )
+if (log) {
+  store = createStore(
+    mainReducer,
+    applyMiddleware(
+      thunkMiddleware, // lets us dispatch() functions
+      loggerMiddleware // neat middleware that logs actions
+    )
+  )
+}
 
 ReactDOM.render(
   <Provider store={store}>

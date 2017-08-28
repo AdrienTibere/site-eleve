@@ -1,4 +1,5 @@
 from flask_restful import fields, marshal_with, reqparse, Resource
+import models
 
 def email(email_str):
     """Return email_str if valid, raise an exception in other case."""
@@ -39,15 +40,14 @@ user_fields = {
 }
 
 class User(Resource):
-
     @marshal_with(user_fields)
     def post(self):
         args = post_parser.parse_args()
         user = create_user(args.username, args.email, args.user_priority)
         return user
 
-    @marshal_with(user_fields)
     def get(self, id):
-        args = post_parser.parse_args()
-        user = fetch_user(id)
+        user = models.user.User.query.get(id)
+        #args = post_parser.parse_args()
+        #user = fetch_user(id)
         return user

@@ -2,4 +2,4 @@
 from json import dumps
 from requests import put, get, post
 
-print get('http://localhost:5000/api/exercice/1').json()
+user = get('http://localhost:5000/api/user/3').json()

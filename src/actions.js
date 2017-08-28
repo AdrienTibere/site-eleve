@@ -34,10 +34,14 @@ function receiveLogIn(json) {
 
 // Though its insides are different, you would use it just like any other action creator:
 // store.dispatch(fetchLogIn())
-export function fetchLogIn() {
+export function fetchLogIn(formData) {
   return function (dispatch) {
     dispatch(requestLogIn());
-    return fetch(server_url + 'api/exercice/1')
+    return fetch(server_url + 'api/login',
+      {
+        method: 'POST',
+        body:formData
+      })
       .then(
         response => response.json(),
         error => console.log('An error occured.', error)

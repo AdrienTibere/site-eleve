@@ -1,7 +1,7 @@
 import {LOG_IN, SET_REDIRECT_URL, REQUEST_LOG_IN, RECEIVE_LOG_IN} from './actions.js';
 
 const initialState = {
-  user: {},
+  user: null,
   isLoggedIn: false,
   redirectUrl: '/'
 }
