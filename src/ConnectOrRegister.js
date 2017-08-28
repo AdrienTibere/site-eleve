@@ -2,6 +2,7 @@ import React from 'react'
 import RegisterForm from './RegisterForm.js'
 import ConnectForm from './ConnectForm.js'
 import Button from 'muicss/lib/react/button';
+import {connect} from 'react-redux';
 
 class ConnectOrRegister extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class ConnectOrRegister extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{display: this.props.user?"none":""}}>
         <div style={{textAlign: "center"}}>
           <Button onClick={this.showConnectForm} color="primary" size="large" style={{fontSize: '20px'}}>Se connecter</Button>
           <Button onClick={this.showRegisterForm} size="large" style={{fontSize: '20px'}}>S'inscrire</Button>
@@ -40,4 +41,11 @@ class ConnectOrRegister extends React.Component {
     );
   }
 }
-export default ConnectOrRegister
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(ConnectOrRegister)
