@@ -58,8 +58,8 @@ class App extends Component {
             <Switch>
               <Route exact={true} path="/" render={() => (
                 <div>
-                  <div className="mui--text-display4 welcome">Bienvenue !</div>
-                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Vous êtes sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
+                  <div className="mui--text-display3 welcome">Bienvenue {this.props.user?this.props.user.first_name:""} !</div>
+                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Tu es sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée <span>test</span></div>
                   <ConnectOrRegister/>
                 </div>
               )}/>

@@ -32,9 +32,8 @@ def exercice_1():
     </div>
     ''',
     'solution':'''
-    <div style='text-align: center'>
-    &#9472;&#9472;&#9472;&#9472;''' + '''<span style='color: #F44336'>''' + first_bracet + '&#9472;&#9472;&#9472;'*(second_nb-first_nb) + second_bracet + '''</span>''' + '''&#9472;&#9472;&#9472;&#9472;<br/>
-    <span style='visibility:hidden;'>&#9472;&#9472;&#9472;---</span> ''' + str(first_nb) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(3*(second_nb-first_nb)-1) + '''</span> ''' + str(second_nb) + ''' <span style='visibility:hidden;'>&#9472;&#9472;&#9472;&#9472;-</span><br/>
+    <div style='text-align: center; margin-bottom: 25px'>
+    &#9472;&#9472;&#9472;&#9472;''' + '''<span style='color: #F44336'>''' + first_bracet + "<span style='position: relative; top: 25px; right: 13px'>" + str(first_nb) +  "</span>" + '<span style="margin-left: -15px"></span>' + '&#9472;&#9472;&#9472;'*(second_nb-first_nb) + second_bracet + "<span style='position: relative; top: 25px; right: 13px'>" + str(second_nb) +  "</span>" + '''</span>''' + '<span style="margin-left: -15px"></span>' + '''&#9472;&#9472;&#9472;&#9472;<br/>
     </div>
     '''
   }), 201
@@ -55,6 +54,8 @@ def exercice_2():
   ecart1 = nb3 - nb1
   ecart2 = nb2 - nb3
   ecart3 = nb4 - nb2
+  def below(nb):
+    return "<span style='position: relative; top: 25px; right: 13px;'>" + str(nb) + "</span><span style='margin-left: -18px'></span>" 
   if nb1>=0:
     nb1 = '&nbsp;' + str(nb1)
   if nb2>=0:
@@ -66,21 +67,17 @@ def exercice_2():
   if link == '∪':
     sol = '''
     Pour représenter l'union de deux intervalles, on dessine les deux intervalles graphiquement et on colorie les deux parties. La partie coloriée est l'union des deux intervalles, ici ''' + bracet1 + str(nb1) + ' ; ' + str(nb4)  + bracet4 + '''.<br/><br/>
-    <div style='display: inline-block; text-align: left'>
-    &#9472;&#9472;<span style='color: #F44336'>''' + bracet1 + '&#9472;&#9472;'*ecart1 + '&#9472;&#9472;'*ecart2 + '&#9472;&#9472;'*ecart3 + bracet4 + '</span>' + '&#9472;&#9472;' + '''<br/>
-    <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-2) + '''-</span> ''' + str(nb3) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart2-2) + '''</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''-</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>------</span>
+    <div style='display: inline-block; text-align: left; margin-bottom: 25px'>
+    &#9472;&#9472;<span style='color: #F44336'>''' + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + below(nb3) + '&#9472;&#9472;'*ecart2 + below(nb2) + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + "</span>" + '</span>' + '&#9472;&#9472;' + '''<br/>
     </div><br/>
     '''
   else:
     sol = '''
     Pour représenter l'intersection de deux intervalles, on dessine les deux intervalles graphiquement et on colorie les deux parties avec deux couleurs différentes. La partie coloriée deux fois est l'intersection des deux intervalles, ici ''' + bracet3 + str(nb3) + ' ; ' + str(nb2)  + bracet2 + '''.<br/><br/>
-    <div style='display: inline-block; text-align: left'>
-    &#9472;&#9472;''' + '&#9472;&#9472;'*ecart1 + "<span style='color: #F44336'>" + bracet3 + '&#9472;&#9472;'*ecart2 + bracet2 + "</span>" + '&#9472;&#9472;'*ecart3 + '&#9472;&#9472;' + '''<br/>
-    <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-2) + '''-</span> ''' + str(nb3) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart2-2) + '''-</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''-</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;--</span>
+    <div style='display: inline-block; text-align: left; margin-bottom: 25px'>
+    &#9472;&#9472;''' + below(nb1) + '&#9472;&#9472;'*ecart1 + "<span style='color: #F44336'>" + bracet3 + below(nb3) + '&#9472;&#9472;'*ecart2 + bracet2 + below(nb2) + "</span>" + '&#9472;&#9472;'*ecart3 + below(nb4) + '&#9472;&#9472;' + '''<br/>
     </div><br/>
     '''
-
-
   return jsonify({
     'statement':'''
     <div>
@@ -118,6 +115,8 @@ def exercice_3():
     nb3 = '&nbsp;' + str(nb3)
   if nb4>=0:
     nb4 = '&nbsp;' + str(nb4)
+  def below(nb):
+    return "<span style='position: relative; top: 25px; right: 13px;'>" + str(nb) + "</span><span style='margin-left: -18px'></span>" 
   disjoint = True
   #Cas ou les intervalles ne sont pas disjoints
   if ecart2 == 0:
@@ -130,38 +129,26 @@ def exercice_3():
     if link == '∪':
       res = bracet1 + str(nb1) + ' ; ' + str(nb2) + bracet2 + ' ' +  link + ' ' + bracet3 + str(nb3) + ' ; ' + str(nb4) + bracet4
       if ecart2 == 0:
-        display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + '&#9472;&#9472;'*ecart1 + bracet2 + '</span>' + ' ' + "<span style='color: #F44336'>" + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + '</span>' + '&#9472;&#9472;' + '''<br/>
-        <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-1) + '''</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-1) + '''</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-        '''
+        display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + bracet2 + '</span>' + ' ' + below(nb2) + "<span style='color: #F44336'>" + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + '</span>' + '&#9472;&#9472;' + '<br/>'
       else:
-        display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + '&#9472;&#9472;'*ecart1 + bracet2 + '</span>' + '&#9472;&#9472;'*ecart2 + "<span style='color: #F44336'>" + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + '</span>' + '&#9472;&#9472;' + '''<br/>
-        <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-2) + '-' + '''</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart2-2) + '-' + '''</span> ''' + str(nb3) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '-' + '''</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-        '''
+        display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + bracet2 + below(nb2) + '</span>' + '&#9472;&#9472;'*ecart2 + "<span style='color: #F44336'>" + bracet3 + below(nb3) + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + '</span>' + '&#9472;&#9472;' + '<br/>'
     else:
       res = '∅'
       if ecart2 == 0:
-        display = "&#9472;&#9472;" + bracet1 + '&#9472;&#9472;'*ecart1 + bracet2 + ' ' + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + '&#9472;&#9472;' + '''<br/>
-        <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-1) + '''</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''-</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-        '''
+        display = "&#9472;&#9472;" + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + bracet2 + ' ' + below(nb2) + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + '&#9472;&#9472;' + '<br/>'
       else:
-        display = "&#9472;&#9472;" + bracet1 + '&#9472;&#9472;'*ecart1 + bracet2 + '&#9472;&#9472;'*ecart2 + bracet3 + '&#9472;&#9472;'*ecart3 + bracet4 + '&#9472;&#9472;' + '''<br/>
-        <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-2) + '''-</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart2-2) + '''-</span> ''' + str(nb3) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''-</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-        '''
+        display = "&#9472;&#9472;" + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + bracet2 + below(nb2) + '&#9472;&#9472;'*ecart2 + bracet3 + below(nb3) + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + '&#9472;&#9472;' + '<br/>'
   else:
     if link == '∪':
       res = bracet1 + str(nb1) + ' ; ' + str(nb4) + bracet4
-      display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + '&#9472;&#9472;'*ecart1 + '&#9472;&#9472;'*ecart2 + '&#9472;&#9472;'*ecart3 + bracet4 + '</span>' + '&#9472;&#9472;' + '''<br/>
-      <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart1-2) + '''-</span> ''' + str(nb2) + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-      '''
+      display = "&#9472;&#9472;<span style='color: #F44336'>" + bracet1 + below(nb1) + '&#9472;&#9472;'*ecart1 + below(nb2) + '&#9472;&#9472;'*ecart3 + bracet4 + below(nb4) + '</span>' + '&#9472;&#9472;' + '<br/>'
     else:
       res = '{' + str(nb2) + ' }'
-      display = "&#9472;&#9472;" + '&#9472;&#9472;'*ecart1 + "<span style='color: #F44336'>|</span>" + '&#9472;&#9472;'*ecart3 + '&#9472;&#9472;' + '''<br/>
-      <span style='visibility:hidden;'>&#9472;</span> ''' + str(nb1) + ''' <span style='visibility:hidden;'>''' + '-'*(4*ecart1-3) + '''</span> ''' + "<span style='color: #F44336'>" + str(nb3) + "</span>" + ''' <span style='visibility:hidden;'>''' + '&#9472;'*(2*ecart3-2) + '''-</span> ''' + str(nb4) + ''' <span style='visibility:hidden;'>&#9472;&#9472;</span>
-      '''
+      display = "&#9472;&#9472;" + below(nb1) + '&#9472;&#9472;'*ecart1 + "<span style='color: #F44336'>|" + below(nb3) +  "</span>" + '&#9472;&#9472;'*ecart3 + below(nb4) + '&#9472;&#9472;' + '<br/>'
   if link == '∪':
     sol = ''' 
     Pour représenter l'union de deux intervalles, on dessine les deux intervalles graphiquement et on colorie les deux parties. La partie coloriée est l'union des deux intervalles, ici ''' + res + '''.<br/><br/>
-    <div style='display: inline-block; text-align: left'>
+    <div style='display: inline-block; text-align: left; margin-bottom: 25px'>
     ''' + display + '''
     </div><br/>
     '''
@@ -169,14 +156,14 @@ def exercice_3():
     if disjoint:
       sol = '''
       Lorsque deux intervalles sont disjoints, ils n'ont aucun élément en commun. Leur intersection vaut donc ''' + res + '''.<br/><br/>
-      <div style='display: inline-block; text-align: left'>
+      <div style='display: inline-block; text-align: left; margin-bottom: 25px'>
       ''' + display + '''
       </div><br/>
       '''
     else:
       sol = '''
       Pour représenter l'intersection de deux intervalles, on dessine les deux intervalles graphiquement et on colorie les deux parties avec deux couleurs différentes. La partie coloriée deux fois est l'intersection des deux intervalles, ici ''' + res + '''.<br/><br/>
-      <div style='display: inline-block; text-align: left'>
+      <div style='display: inline-block; text-align: left; margin-bottom: 25px'>
       ''' + display + '''
       </div><br/>
       '''
