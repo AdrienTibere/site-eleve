@@ -6,6 +6,7 @@ import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
 import refresh from './images/refresh.png';
 import fetch from 'isomorphic-fetch';
+import AutoEval from './AutoEval.js';
 
 class Exercice extends Component {
   constructor(props) {
@@ -86,17 +87,9 @@ class Exercice extends Component {
         <div id="solution" style={{borderColor: this.state.chapter.color, display: this.state.displaySol ? '' : 'none'}} >
           <h1>Solution</h1>
           <div dangerouslySetInnerHTML={{__html: this.state.solution}}></div>
-          <div style={{display: "None"}} id="autoeval">
-            <h1>Auto-évaluation</h1>
-            <h2>As-tu réussi cet exercice ? Sois honnête si tu veux progresser !</h2>
-            <div className="buttons">
-              <Button color="danger">Je n'avais pas réussi</Button>
-              <Button color="primary">J'y étais presque..!</Button>
-              <Button color="primary" style={{backgroundColor: "#4CAF50"}}>Oui, parfaitement</Button>
-            </div>
-          </div>
+          <AutoEval objective={this.state.objective} difficulty={this.state.exercice.difficulty}/>
           <div style={{textAlign: 'center', marginTop: '10px'}}>
-            <Button color="primary" onClick={this.newExercice}>Je veux en faire un autre !</Button>
+            <Button onClick={this.newExercice}>Je veux en faire un autre !</Button>
           </div>
         </div>
       </div>

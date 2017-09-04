@@ -10,6 +10,7 @@ import ExercicesByObjective from './ExercicesByObjective.js';
 import {connect} from 'react-redux';
 //import {fetchLogIn} from './actions'
 import ConnectOrRegister from './ConnectOrRegister.js'
+import Profile from './Profile.js'
 
 class App extends Component {
   componentDidMount() {
@@ -46,7 +47,7 @@ class App extends Component {
                   <Link to={'/exercices'} style={s2}>Exercices</Link>
                 </td>
                 <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none", textAlign: "right"}}>
-                  <span style={s2}>{this.props.user?this.props.user.username:""}</span>
+                  <Link to={'/profile'}><span style={s2}>{this.props.user?this.props.user.username:""}</span></Link>
                 </td>
               </tr>
             </tbody>
@@ -59,7 +60,7 @@ class App extends Component {
               <Route exact={true} path="/" render={() => (
                 <div>
                   <div className="mui--text-display3 welcome">Bienvenue {this.props.user?this.props.user.first_name:""} !</div>
-                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Tu es sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée <span>test</span></div>
+                  <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Tu es sur le site du Professeur Tibère<br/>Le site d'aide aux devoirs en mathématiques pour les élèves de lycée</div>
                   <ConnectOrRegister/>
                 </div>
               )}/>
@@ -67,6 +68,7 @@ class App extends Component {
               <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
               <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
               <Route exact={true} path="/exercices/:exId" component={Exercice}/>
+              <Route exact={true} path="/profile" component={Profile}/>
               <Route render={() => (
                 <div>
                   <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Cette page n'existe pas !</div>
