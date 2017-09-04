@@ -40,7 +40,7 @@ class Profile extends Component {
     return (
       <div id="profile">
         <Link to={{pathname:'/exercices/chapitre/' + this.state.current_chapter.id, state:{chapter:this.state.current_chapter}}}>
-          <div className="big-title" style={{color: this.state.current_chapter.color}}>Chapitre {this.state.current_chapter.nb} en cours : {this.state.current_chapter.name}</div>
+          <div className="big-title" style={{color: this.state.current_chapter.color}}>En ce moment : Chapitre {this.state.current_chapter.nb}, {this.state.current_chapter.name}</div>
         </Link>
         <Divider />
         <div className="big-title" style={{color: this.state.current_chapter.color}}>Objectifs :</div>

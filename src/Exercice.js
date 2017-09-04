@@ -27,10 +27,13 @@ class Exercice extends Component {
       chapter: chapter,
       statement: "",
       solution: "",
-      displaySol: false
+      displaySol: false,
+      showTextAutoEval: false,
+      textAutoEval: ""
     };
 
     this.newExercice = this.newExercice.bind(this);
+    this.handleShowTextAutoEval = this.handleShowTextAutoEval.bind(this);
   }
 
   showSolution() {
@@ -38,7 +41,10 @@ class Exercice extends Component {
   }
 
   newExercice() {
-    this.setState({displaySol: false});
+    this.setState({
+      displaySol: false,
+    });
+    this.handleShowTextAutoEval(false);
     fetch(server_url + 'api/exercice/' + this.props.match.params.exId)
     .then(response => response.json())
     .then((exercice) => {
@@ -60,6 +66,17 @@ class Exercice extends Component {
 
   componentDidMount() {
     this.newExercice();
+  }
+
+  handleShowTextAutoEval(bool, text="") {
+    if (bool) {
+      this.setState({
+        textAutoEval: text,
+        showTextAutoEval: true
+      });
+    } else {
+      this.setState({showTextAutoEval: false, textAutoEval: ""});
+    }
   }
 
   render() {
@@ -87,7 +104,10 @@ class Exercice extends Component {
         <div id="solution" style={{borderColor: this.state.chapter.color, display: this.state.displaySol ? '' : 'none'}} >
           <h1>Solution</h1>
           <div dangerouslySetInnerHTML={{__html: this.state.solution}}></div>
-          <AutoEval objective={this.state.objective} difficulty={this.state.exercice.difficulty}/>
+          <AutoEval objective={this.state.objective} difficulty={this.state.exercice.difficulty} 
+                    handleShowTextAutoEval={this.handleShowTextAutoEval}
+                    showText={this.state.showTextAutoEval}
+                    text={this.state.textAutoEval}/>
           <div style={{textAlign: 'center', marginTop: '10px'}}>
             <Button onClick={this.newExercice}>Je veux en faire un autre !</Button>
           </div>
