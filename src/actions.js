@@ -9,6 +9,13 @@ export function logIn(user) {
   }
 }
 
+export const LOG_OUT = 'LOG_OUT';
+export function logOut() {
+  return {
+    type: LOG_OUT
+  }
+}
+
 export const SET_REDIRECT_URL = 'SET_REDIRECT_URL';
 export function setRedirectUrl(newUrl = '/') {
   return {

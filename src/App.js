@@ -11,8 +11,16 @@ import {connect} from 'react-redux';
 //import {fetchLogIn} from './actions'
 import ConnectOrRegister from './ConnectOrRegister.js'
 import Profile from './Profile.js'
+import Dropdown from 'muicss/lib/react/dropdown';
+import DropdownItem from 'muicss/lib/react/dropdown-item';
+import {logOut} from './actions'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this)
+  }
+
   componentDidMount() {
     //const { dispatch } = this.props;
     //dispatch(fetchLogIn());
@@ -28,6 +36,11 @@ class App extends Component {
     //} else if (isLoggingOut) {
       // do any kind of cleanup or post-logout redirection here
     //}
+  }
+
+  logout() {
+    this.props.dispatch(logOut());
+    localStorage.removeItem("authUserToken");
   }
 
   render() {
@@ -47,7 +60,10 @@ class App extends Component {
                   <Link to={'/exercices'} style={s2}>Exercices</Link>
                 </td>
                 <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none", textAlign: "right"}}>
-                  <Link to={'/profile'}><span style={s2}>{this.props.user?this.props.user.username:""}</span></Link>
+                  <Dropdown color="primary" label={this.props.user?this.props.user.username:""}>
+                    <DropdownItem link="#/profile">Profil</DropdownItem>
+                    <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
+                  </Dropdown>
                 </td>
               </tr>
             </tbody>

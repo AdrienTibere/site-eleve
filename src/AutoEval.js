@@ -33,7 +33,7 @@ class AutoEval extends Component {
 
   render() {
     return (
-      <div id="autoeval">
+      <div id="autoeval" style={{display: this.props.user?"":"none"}}>
         <h1>Auto-évaluation</h1>
         <div style={{display: this.props.showText?"None":""}}>
           <h2>As-tu réussi cet exercice ? Sois honnête si tu veux progresser !</h2>

@@ -6,7 +6,7 @@ from models.score import Score
 from models.user import MyRegisterForm, User, UserAuth, user_manager, login_manager
 import models
 from flask import jsonify, request
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, logout_user
 
 @login_manager.user_loader
 @app.route('/api/login', methods=['GET', 'POST'])
@@ -22,6 +22,12 @@ def login():
     return jsonify({'result': True, 'user': user}), 201
   else:
     return jsonify({'result': False, 'error': "Le nom d'utilisateur ou le mot de passe est incorrect."}), 400
+
+@app.route('/api/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+  logout_user()
+  return jsonify({'result': True}),201
 
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
@@ -119,6 +125,7 @@ def get_score(user_id, obj_id):
 
 
 # Profile route
+@login_required
 @app.route('/api/profile/<int:user_id>', methods=['GET'])
 def profile(user_id):
   chapter_id = 1
