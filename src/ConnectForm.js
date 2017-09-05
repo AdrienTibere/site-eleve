@@ -59,7 +59,7 @@ class ConnectForm extends Component {
         <Form onSubmit={this.login}>
           <legend>Connexion</legend>
           <Input name="username" label="Nom d'utilisateur" floatingLabel={true} required={true} onChange={this.handleInputChange} />
-          <Input name="password" label="Mot de passe" floatingLabel={true} required={true} onChange={this.handleInputChange} />
+          <Input name="password" type="password" label="Mot de passe" floatingLabel={true} required={true} onChange={this.handleInputChange} />
           <Button color="primary">Se connecter</Button>
         </Form> 
       </div>

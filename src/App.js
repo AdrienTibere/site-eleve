@@ -62,7 +62,7 @@ class App extends Component {
                 <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none", textAlign: "right"}}>
                   <Dropdown color="primary" label={this.props.user?this.props.user.username:""}>
                     <DropdownItem link="#/profile">Profil</DropdownItem>
-                    <DropdownItem onClick={this.logout}>Déconnexion</DropdownItem>
+                    <DropdownItem link="/" onClick={this.logout}>Déconnexion</DropdownItem>
                   </Dropdown>
                 </td>
               </tr>
