@@ -14,6 +14,7 @@ import Profile from './Profile.js'
 import Dropdown from 'muicss/lib/react/dropdown';
 import DropdownItem from 'muicss/lib/react/dropdown-item';
 import {logOut} from './actions'
+import Divider from 'muicss/lib/react/divider';
 
 class App extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class App extends Component {
                 <td className="mui--appbar-height" style={{display: this.props.user?"table-cell":"none", textAlign: "right"}}>
                   <Dropdown color="primary" label={this.props.user?this.props.user.username:""}>
                     <DropdownItem link="#/profile">Profil</DropdownItem>
+                    <Divider />
                     <DropdownItem link="/" onClick={this.logout}>Déconnexion</DropdownItem>
                   </Dropdown>
                 </td>

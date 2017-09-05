@@ -24,9 +24,9 @@ class AutoEval extends Component {
     if (parseInt(e.target.value, 10) === 1) {
       text = "Il n'y a que ceux qui n'essayent pas qui ne se trompent pas. Retente ta chance, ça va venir !";
     } else if (parseInt(e.target.value, 10) === 3) {
-      text = "Tu es sur la voie, continue !"
+      text = "Tu es sur la voie, continue ! Tu gagnes " + score.toString() + " points dans cet objectif."
     } else {
-      text = "Quel talent, bravo !"
+      text = "Quel talent, bravo ! Tu gagnes " + score.toString() + " points dans cet objectif."
     }
     this.showText(true, text);
   }

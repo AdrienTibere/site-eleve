@@ -34,7 +34,7 @@ class Profile extends Component {
     // objectives = [{'objective': blabla, 'score': {objective, user, score}}, ...]
     this.state.objectives.forEach((obj) => {
       rows.push(
-        <ProfileScore key={obj.objective.id} color={this.state.current_chapter.color} objective={obj.objective} score={obj.score.score}/>
+        <ProfileScore key={obj.objective.id} chapter={this.state.current_chapter} objective={obj.objective} score={obj.score.score}/>
       )
     });
 
