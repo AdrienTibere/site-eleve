@@ -1,0 +1,10 @@
+#scores-list li {
+  line-height: 50px;
+  font-size: 20px;
+  list-style-type: none;
+  padding: 10px;
+  margin: 5px;
+  color: white;
+}
+
+

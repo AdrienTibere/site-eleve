@@ -4,6 +4,7 @@ import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 import {connect} from 'react-redux';
+import ProfileScore from './ProfileScore'
 
 class Profile extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Profile extends Component {
     // objectives = [{'objective': blabla, 'score': {objective, user, score}}, ...]
     this.state.objectives.forEach((obj) => {
       rows.push(
-        <div key={obj.objective.id}>{obj.objective.name} : {obj.score.score}</div>
+        <ProfileScore key={obj.objective.id} color={this.state.current_chapter.color} objective={obj.objective} score={obj.score.score}/>
       )
     });
 
@@ -43,10 +44,12 @@ class Profile extends Component {
           <div className="big-title" style={{color: this.state.current_chapter.color}}>En ce moment : Chapitre {this.state.current_chapter.nb}, {this.state.current_chapter.name}</div>
         </Link>
         <Divider />
-        <div className="big-title" style={{color: this.state.current_chapter.color}}>Objectifs :</div>
-        <ul>
-          {rows}
-        </ul>
+        <div className="big-title" style={{color: this.state.current_chapter.color, display: "inline-flex"}}>Progression des objectifs :</div>
+        <div id="scores-list" style={{display: "inline-flex"}}>
+          <ul>
+            {rows}
+          </ul>
+        </div>
       </div>
     )
   }
