@@ -4,9 +4,9 @@ import './Exercice.css';
 import Button from 'muicss/lib/react/button';
 import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
-import refresh from './images/refresh.png';
 import fetch from 'isomorphic-fetch';
 import AutoEval from './AutoEval.js';
+import MdAutorenew from 'react-icons/lib/md/autorenew';
 
 class Exercice extends Component {
   constructor(props) {
@@ -95,7 +95,7 @@ class Exercice extends Component {
         <div id="statement" style={{borderColor: this.state.chapter.color}}>
           <h1 style={{display:'inline-block'}}>Énoncé :</h1> 
           <div style={{display: 'inline-block', marginLeft: '20px', cursor: 'pointer'}}>
-            <img onClick={this.newExercice} height="30px" src={refresh} alt="img-Relancer" title="Un autre énoncé svp !"/>
+            <MdAutorenew onClick={this.newExercice} />
           </div>
           <div dangerouslySetInnerHTML={{__html: this.state.statement}}></div>
           <br/>

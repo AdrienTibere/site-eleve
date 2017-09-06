@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import './ProfileScore.css'
+import MdCheck from 'react-icons/lib/md/check';
 
 class ProfileScore extends Component {
   render() {
@@ -28,11 +29,12 @@ class ProfileScore extends Component {
     var link = '/exercices/objectif/' + this.props.objective.id.toString();
     let chapter = this.props.chapter;
     let obj = this.props.objective;
+    let checked = this.props.score>=100;
     return (
       <Link to={{pathname:link, state:{chapter:chapter, obj:obj}}}>
-        <li style={{backgroundColor: this.props.chapter.color}}>
+        <li style={{backgroundColor: checked?"#4CAF50":this.props.chapter.color}}>
           <Line progress={progression} containerStyle={containerStyle} text={text} options={options} />
-          {this.props.objective.name}
+          {this.props.objective.name} <MdCheck style={{display: checked?"":"none", fontSize: "30px", marginLeft: "10px"}} />
         </li>
       </Link>
     )
