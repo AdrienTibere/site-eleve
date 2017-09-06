@@ -4,7 +4,9 @@ import './Exercice.css';
 import Button from 'muicss/lib/react/button';
 import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
-import refresh from './images/refresh.png';
+import fetch from 'isomorphic-fetch';
+import AutoEval from './AutoEval.js';
+import MdAutorenew from 'react-icons/lib/md/autorenew';
 
 class Exercice extends Component {
   constructor(props) {
@@ -25,10 +27,13 @@ class Exercice extends Component {
       chapter: chapter,
       statement: "",
       solution: "",
-      displaySol: false
+      displaySol: false,
+      showTextAutoEval: false,
+      textAutoEval: ""
     };
 
     this.newExercice = this.newExercice.bind(this);
+    this.handleShowTextAutoEval = this.handleShowTextAutoEval.bind(this);
   }
 
   showSolution() {
@@ -36,7 +41,10 @@ class Exercice extends Component {
   }
 
   newExercice() {
-    this.setState({displaySol: false});
+    this.setState({
+      displaySol: false,
+    });
+    this.handleShowTextAutoEval(false);
     fetch(server_url + 'api/exercice/' + this.props.match.params.exId)
     .then(response => response.json())
     .then((exercice) => {
@@ -60,6 +68,17 @@ class Exercice extends Component {
     this.newExercice();
   }
 
+  handleShowTextAutoEval(bool, text="") {
+    if (bool) {
+      this.setState({
+        textAutoEval: text,
+        showTextAutoEval: true
+      });
+    } else {
+      this.setState({showTextAutoEval: false, textAutoEval: ""});
+    }
+  }
+
   render() {
     return (
       <div id="exercice">
@@ -76,7 +95,7 @@ class Exercice extends Component {
         <div id="statement" style={{borderColor: this.state.chapter.color}}>
           <h1 style={{display:'inline-block'}}>Énoncé :</h1> 
           <div style={{display: 'inline-block', marginLeft: '20px', cursor: 'pointer'}}>
-            <img onClick={this.newExercice} height="30px" src={refresh} alt="img-Relancer" title="Un autre énoncé svp !"/>
+            <MdAutorenew onClick={this.newExercice} />
           </div>
           <div dangerouslySetInnerHTML={{__html: this.state.statement}}></div>
           <br/>
@@ -85,17 +104,12 @@ class Exercice extends Component {
         <div id="solution" style={{borderColor: this.state.chapter.color, display: this.state.displaySol ? '' : 'none'}} >
           <h1>Solution</h1>
           <div dangerouslySetInnerHTML={{__html: this.state.solution}}></div>
-          <div style={{display: "None"}} id="autoeval">
-            <h1>Auto-évaluation</h1>
-            <h2>As-tu réussi cet exercice ? Sois honnête si tu veux progresser !</h2>
-            <div className="buttons">
-              <Button color="danger">Je n'avais pas réussi</Button>
-              <Button color="primary">J'y étais presque..!</Button>
-              <Button color="primary" style={{backgroundColor: "#4CAF50"}}>Oui, parfaitement</Button>
-            </div>
-          </div>
+          <AutoEval objective={this.state.objective} difficulty={this.state.exercice.difficulty} 
+                    handleShowTextAutoEval={this.handleShowTextAutoEval}
+                    showText={this.state.showTextAutoEval}
+                    text={this.state.textAutoEval}/>
           <div style={{textAlign: 'center', marginTop: '10px'}}>
-            <Button color="primary" onClick={this.newExercice}>Je veux en faire un autre !</Button>
+            <Button onClick={this.newExercice}>Je veux en faire un autre !</Button>
           </div>
         </div>
       </div>

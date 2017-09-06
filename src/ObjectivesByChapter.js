@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ObjectiveResume from './ObjectiveResume.js';
 import {server_url} from './config.js';
+import fetch from 'isomorphic-fetch'
 
 class ObjectivesByChapter extends Component {
   constructor(props) {

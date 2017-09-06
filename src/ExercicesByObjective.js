@@ -3,6 +3,7 @@ import Divider from 'muicss/lib/react/divider';
 import ExerciceResume from './ExerciceResume.js';
 import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
+import fetch from 'isomorphic-fetch'
 
 class ExercicesByObjective extends Component {
   constructor(props) {

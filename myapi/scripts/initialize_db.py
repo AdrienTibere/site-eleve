@@ -138,12 +138,12 @@ objectives = [
   {
     'chapter_id':1,
     'nb':1,
-    'name':u"Représenter graphiquement des intervalles"
+    'name':u"Comprendre les notions d'union et d'intersection d'intervalles"
   },
   {
     'chapter_id':1,
     'nb':2,
-    'name':u"Comprendre les notions d'union et d'intersection d'intervalles"
+    'name':u"Représenter graphiquement des intervalles"
   },
   {
     'chapter_id':2,
@@ -555,31 +555,59 @@ objectives = [
 exercices = [
   {
     'chapter_id':1,
-    'obj_id':1,
+    'obj_id':2,
     'name':"Représenter un intervalle",
     'difficulty':1,
     'url':'api/exercice/content/1'
   },
   {
     'chapter_id':1,
-    'obj_id':1,
+    'obj_id':2,
     'name':"Représenter des unions et des intersections",
     'difficulty':2,
     'url':'api/exercice/content/2'
   },
   {
     'chapter_id':1,
-    'obj_id':1,
+    'obj_id':2,
     'name':"Représenter des unions et des intersections d'intervalles disjoints",
     'difficulty':2,
     'url':'api/exercice/content/3'
   },
   {
     'chapter_id':1,
-    'obj_id':2,
-    'name':"Calculer une union d'intervalles",
+    'obj_id':1,
+    'name':"Appartenance à un intervalle",
     'difficulty':1,
     'url':'api/exercice/content/4'
+  },
+  {
+    'chapter_id':1,
+    'obj_id':1,
+    'name':"Lien entre inégalités et intervalles",
+    'difficulty':1,
+    'url':'api/exercice/content/5'
+  },
+  {
+    'chapter_id':1,
+    'obj_id':1,
+    'name':"Calculer une union d'intervalles",
+    'difficulty':2,
+    'url':'api/exercice/content/6'
+  },
+  {
+    'chapter_id':1,
+    'obj_id':1,
+    'name':"Calculer une intersection d'intervalles",
+    'difficulty':2,
+    'url':'api/exercice/content/7'
+  },
+  {
+    'chapter_id':1,
+    'obj_id':1,
+    'name':"Vrai ou faux ?",
+    'difficulty':2,
+    'url':'api/exercice/content/8'
   },
 ]
 

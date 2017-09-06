@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ExercicesChapterResume from './ExercicesChapterResume.js';
 import {server_url} from './config.js';
+import fetch from 'isomorphic-fetch'
 
 class ExercicesChaptersList extends Component {
   constructor(props) {
