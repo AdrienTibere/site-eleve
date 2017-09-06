@@ -8,7 +8,6 @@ import Exercice from './Exercice.js';
 import ObjectivesByChapter from './ObjectivesByChapter.js';
 import ExercicesByObjective from './ExercicesByObjective.js';
 import Button from 'muicss/lib/react/button';
-import EnsureLoggedInContainer from './EnsureLoggedIn.js';
 import {connect} from 'react-redux';
 
 class App extends Component {
@@ -25,7 +24,7 @@ class App extends Component {
   }
 
   render() {
-    let s2 = {color: 'white', 'font-size': '18px'};
+    let s2 = {color: 'white', fontSize: '18px'};
 
     return (
       <Router>
@@ -57,12 +56,10 @@ class App extends Component {
                   </div>
                 </div>
               )}/>
-              <EnsureLoggedInContainer>
-                <Route exact={true} path="/exercices" component={ExercicesChaptersList}/>
-                <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
-                <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
-                <Route exact={true} path="/exercices/:exId" component={Exercice}/>
-              </EnsureLoggedInContainer>
+              <Route exact={true} path="/exercices" component={ExercicesChaptersList}/>
+              <Route path="/exercices/chapitre/:chapterId" component={ObjectivesByChapter}/>
+              <Route path="/exercices/objectif/:objId" component={ExercicesByObjective}/>
+              <Route exact={true} path="/exercices/:exId" component={Exercice}/>
               <Route render={() => (
                 <div>
                   <div className="mui--text-display1 welcome" style={{marginBottom: '20px', marginTop: '30px'}}>Cette page n'existe pas !</div>
