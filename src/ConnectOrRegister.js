@@ -3,6 +3,7 @@ import RegisterForm from './RegisterForm.js'
 import ConnectForm from './ConnectForm.js'
 import Button from 'muicss/lib/react/button';
 import {connect} from 'react-redux';
+import Timeout from './mixins/settimeout.js'; 
 
 class ConnectOrRegister extends React.Component {
   constructor(props) {
@@ -18,6 +19,8 @@ class ConnectOrRegister extends React.Component {
     this.handleRegister = this.handleRegister.bind(this);
   }
 
+  mixins: [SetTimeoutMixin]
+
   showRegisterForm() {
     this.setState({displayConnectForm: false, displayRegisterForm: !this.state.displayRegisterForm});
   }
@@ -28,7 +31,7 @@ class ConnectOrRegister extends React.Component {
 
   handleRegister() {
     this.setState({displayRegisterNotification: true})
-    setTimeout(function(){
+    this.props.setTimeout(function(){
       this.setState({displayRegisterNotification: false});
     }.bind(this),5000);
   }
@@ -64,4 +67,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(ConnectOrRegister)
+export default connect(mapStateToProps)(Timeout(ConnectOrRegister))
