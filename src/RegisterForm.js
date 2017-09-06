@@ -6,6 +6,8 @@ import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
 import {server_url} from './config.js';
 import fetch from 'isomorphic-fetch';
+import {connect} from 'react-redux';
+import {logIn} from './actions';
 
 class RegisterForm extends Component {
 	constructor(props) {
@@ -38,7 +40,21 @@ class RegisterForm extends Component {
     .then(json => {
       if (json) {
         if (json.result) {
-          this.props.display();
+          var form_data = new FormData();
+          form_data.append("username",this.state.username);
+          form_data.append("password",this.state.password);
+          fetch(server_url + 'api/login',
+            {
+              method: 'POST',
+              body: form_data
+            })
+          .then(response => response.json())
+          .then(json => {
+            this.props.display();
+            this.props.handleRegister();
+            this.props.dispatch(logIn(json.user));
+            localStorage.setItem('authUserToken', JSON.stringify(json.user));
+          });
         }
         else {
           this.setState({displayError: true});
@@ -81,4 +97,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default RegisterForm;
+export default connect()(RegisterForm);

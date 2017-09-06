@@ -30,7 +30,7 @@ if (log) {
 }
 
 const token = localStorage.getItem('authUserToken');
-if (token) {
+if (token && (token !== "undefined")) {
   store.dispatch(authenticateUser(JSON.parse(token)));
 }
 
