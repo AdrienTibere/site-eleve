@@ -45,6 +45,11 @@ def register():
     return jsonify({'result': True, 'user': user}), 201
   return jsonify({'result': False}), 400
 
+@app.route('/api/user/get_all', methods=['GET'])
+def user_get_all():
+  users = models.user.User.query.all()
+  return jsonify({'result': users}), 201
+
 
 # Chapter routes
 @app.route('/api/chapter/delete_all', methods=['DELETE'])
