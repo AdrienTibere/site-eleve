@@ -5,6 +5,8 @@ from models.ChapterModel import ChapterModel
 from models.ObjectiveModel import ObjectiveModel
 from flask import jsonify
 import random
+from sympy import symbols, simplify, factor, gcd
+
 
 ######### template ##############
 @app.route('/api/exercice/content/n')
@@ -16,6 +18,16 @@ def exercice_n():
     '''
   }), 201
 ####### end template ############
+
+def display(statement, solution):
+  return jsonify({
+    'statement': statement,
+    'solution':'''
+    <div style='text-align: center'>
+    ''' + solution + '''
+    </div>
+    '''
+  }), 201
 
 @app.route('/api/exercice/content/1')
 def exercice_1():
@@ -415,3 +427,278 @@ def exercice_8():
     '''
   }), 201
 
+
+
+########### Chapter 1: Expressions algébriques ######################
+@app.route('/api/exercice/content/9')
+def exercice_9():
+  def to_str(n):
+    if n < 0:
+      return " - " + str(-n)
+    else:
+      return " + " + str(n)
+  def to_str_first(n):
+    if n == 1:
+      return ""
+    else:
+      return str(n)
+  numbers = range(-10,-1) + range(1,10)
+  n1 = random.choice(numbers)
+  n2 = random.choice(numbers)
+  n3 = random.choice(numbers)
+  first = bool(random.getrandbits(1))
+  temp = random.choice(['with x','without x'])
+  if temp == 'with x':
+    if first:
+      exp = to_str_first(n1) + "x × (" + to_str_first(n2) + "x" + to_str(n3) + ")"
+    else:
+      exp = "(" + to_str_first(n2) + "x" + to_str(n3) + ") × " + to_str_first(n1) + "x"
+    if n1*n3 == 1:
+      sol = to_str_first(n1*n2) + "x²" + " x"
+    else:
+      sol = to_str_first(n1*n2) + "x²" + to_str(n1*n3) + "x"
+    statement = "Développer l'expression algébrique suivante : " + exp
+    solution = "La solution est : " + sol
+  else:
+    if first:
+      exp = str(n1) + "×(" + to_str_first(n2) + "x" + to_str(n3) + ")"
+    else:
+      exp = "(" + to_str_first(n2) + "x" + to_str(n3) + ")×" + str(n1)
+    sol = to_str_first(n1*n2) + "x" + to_str(n1*n3)
+    statement = "Développer l'expression algébrique suivante : " + exp
+    solution = "La solution est : " + sol
+  return jsonify({
+    'statement': statement,
+    'solution':'''
+    <div style='text-align: center'>
+    ''' + solution + '''
+    </div>
+    '''
+  }), 201
+
+@app.route('/api/exercice/content/10')
+def exercice_10():
+  def to_str(n):
+    if n < 0:
+      return " - " + str(-n)
+    else:
+      return " + " + str(n)
+  def to_x(n, carre=False):
+    if not carre:
+      if n == 1:
+        return "x"
+      else:
+        return str(n) + "x"
+    else:
+      if n == 1:
+        return "x²"
+      else:
+        return str(n) + "x²"
+  numbers = range(-10,-1) + range(1,10)
+  n1 = random.choice(numbers)
+  n2 = random.choice(numbers)
+  n3 = random.choice(numbers)
+  n4 = random.choice(numbers)
+  exp = "(" + to_x(n1) + to_str(n2) + ")(" + to_x(n3) + to_str(n4) + ")"
+  inter = "(" + to_x(n1) + ")×(" + to_x(n3) + ") + (" + to_x(n1) + ")×" + str(n4) + " + " + str(n2) + "×(" + to_x(n3) + ") + " + str(n2) + "×" + str(n4)
+  inter2 = to_x(n1*n3, carre=True) + " + " + to_x(n1*n4) + " + " + to_x(n2*n3) + to_str(n2*n4)
+  if (n1*n4 + n3*n2) == 1:
+    sol = to_x(n1*n3, carre=True) + " + x" + to_str(n2*n4)
+  elif (n1*n4 + n3*n2) == 0:
+    sol = to_x(n1*n3, carre=True) + to_str(n2*n4)
+  else:
+    sol = to_x(n1*n3, carre=True) + to_str(n1*n4+n3*n2) + "x" + to_str(n2*n4)
+  statement = "Développer l'expression algébrique suivante : " + exp
+  solution = '''On applique la double distributivité :<br/>
+  <div style="display: inline-flex">''' + exp + '''</div>
+  <div style="display: inline-flex; text-align: left">= ''' + inter + '''<br/>
+  = ''' + inter2 + '''<br/>
+  = ''' + sol + '''</div>
+  <div>La solution est : <span style="font-weight: bold">''' + sol + "</span></div>"
+  return jsonify({
+    'statement': statement,
+    'solution':'''
+    <div style='text-align: center'>
+    ''' + solution + '''
+    </div>
+    '''
+  }), 201
+
+
+@app.route('/api/exercice/content/11')
+def exercice_11():
+  # Factorisation simple
+  def to_str(n):
+    if n < 0:
+      return " - " + str(-n)
+    else:
+      return " + " + str(n)
+  def to_x(n, carre=False):
+    if n == 1:
+      return "x²" if carre else "x"
+    else:
+      return (str(n) + "x²") if carre else (str(n) + "x")
+  numbers = range(-5,-1) + range(1,5)
+  n1 = random.choice(numbers)
+  n2 = random.choice(numbers)
+  n3 = random.randrange(1,10)
+  x = symbols('x')
+  temp = random.choice(['with x','without x'])
+  if temp == 'with x':
+    exp = to_x(n1, True) + " + " + to_x(n2)
+    sol = str(simplify(n1*x**2 + n2*x)).replace("*","")
+    common_f = str(gcd(n1*x**2,n2*x)).replace("*","")
+    statement = "Factoriser l'expression algébrique suivante : " + exp
+    solution = "Le facteur commun est " + common_f + ". La solution est : <span style='font-weight: bold'>" + sol + "</span>"
+  else:
+    exp = to_x(n1*n3) + to_str(n2*n3)
+    sol = str(simplify(n1*n3*x + n2*n3)).replace("*","")
+    common_f = str(gcd(n1*n3*x,n2*n3)).replace("*","")
+    statement = "Factoriser l'expression algébrique suivante : " + exp
+    solution = "Le facteur commun est " + common_f + ". La solution est : <span style='font-weight: bold'>" + sol + "</span>"
+  return jsonify({
+    'statement': statement,
+    'solution':'''
+    <div style='text-align: center'>
+    ''' + solution + '''
+    </div>
+    '''
+  }), 201
+
+@app.route('/api/exercice/content/12')
+def exercice_12():
+  # Factorisation expression
+  def to_str(n):
+    if n < 0:
+      return " - " + str(-n)
+    else:
+      return " + " + str(n)
+  def to_x(n, carre=False):
+    if n == 1:
+      return "x²" if carre else "x"
+    else:
+      return (str(n) + "x²") if carre else (str(n) + "x")
+  numbers = range(-10,-1) + range(1,10)
+  n1 = random.choice(numbers)
+  n2 = random.choice(numbers)
+  n3 = random.choice(numbers)
+  n4 = random.choice(numbers)
+  x = symbols('x')
+  exp1 = random.sample(["(" + to_x(n1) + to_str(n2) + ")",to_x(n3)],2)
+  exp2 = random.sample(["(" + to_x(n1) + to_str(n2) + ")",str(n4)],2)
+  exp = exp1[0] + "×" + exp1[1] + " + " + exp2[0] + "×" + exp2[1]
+  sol = "(" + to_x(n1) + to_str(n2) + ")(" + to_x(n3) + to_str(n4) + ")"
+  common_f = to_x(n1) + to_str(n2)
+  statement = "Factoriser l'expression algébrique suivante : " + exp
+  solution = "Le facteur commun est " + common_f + ". La solution est : <span style='font-weight: bold'>" + sol + "</span>"
+  return jsonify({
+    'statement': statement,
+    'solution':'''
+    <div style='text-align: center'>
+    ''' + solution + '''
+    </div>
+    '''
+  }), 201
+
+@app.route('/api/exercice/content/13')
+def exercice_13():
+  #Somme de nombres consécutifs 
+  nb = random.randrange(3,7)
+  sol = random.randrange(100,500)
+  somme = nb*sol+nb*(nb-1)/2
+  statement = "On cherche " + str(nb) + " nombres entiers consécutifs dont la somme soit " + str(somme) + ".<br/>Trouver une équation permettant de répondre à ce problème (on ne résoudra pas l'équation)."
+  str_somme = "x"
+  for i in range(1,nb):
+    str_somme += " + (x + " + str(i) + ")"
+  solution = '''
+  On note x le premier des ''' + str(nb) + ''' nombres entiers consécutifs.<br/>
+  Le deuxième nombre de la somme est le nombre entier suivant, soit (x+1), le troisième est (x+2)...<br/>
+  Leur somme vaut donc :<br/>
+  ''' + str_somme + '''<br/>
+  En réduisant, on obtient l'équation : <span style="font-weight: bold">
+  ''' + str(nb) + "x + " + str(nb*(nb-1)/2) + " = " + str(somme) + "</span>"
+  return display(statement, solution)
+
+@app.route('/api/exercice/content/14')
+def exercice_14():
+  sol = random.randrange(15,45)
+  n = random.randrange(5,15)
+  q = 3*sol+2*n
+  statement = "À ce jour, l'âge du capitaine est le double de celui de Fred. Dans " + str(n) + " ans, ils auront à eux deux " + str(q) + " ans.<br/> Quelle est l'équation vérifiée par l'âge de Fred ?"
+  solution = '''
+  Soit x l'âge de Fred. On sait que l'âge du capitaine est le double de celui de Fred, soit 2x.<br/>
+  Dans ''' + str(n) + " ans, ils auront à eux deux " + str(q) + ''' ans. On en déduit l'équation :<br/>
+  <div>
+    <div style='text-align: right; display: inline-flex'>
+    (x + ''' + str(n) + ") + (2x + " + str(n) + ''')<br/> 
+    3x + ''' + str(2*n) + '''
+    </div>
+    <div style='text-align: left; display: inline-flex'>
+    = ''' + str(q) + '''<br/>
+    = ''' + str(q) + '''
+    </div>
+  </div>
+  L'équation vérifiée par l'âge de Fred est : <span style="font-weight: bold">
+  3x + ''' + str(2*n) + " = " + str(q) + "</span>"
+  return display(statement, solution)
+
+@app.route('/api/exercice/content/15')
+def exercice_15():
+  n1 = random.randrange(8,15)
+  ecart = random.randrange(3,7)
+  statement = "On considère un triangle dont un côté mesure " + str(n1) + ''' cm, et les deux autres côtés ont ''' + str(ecart) + ''' cm d'écart.<br/>
+  De plus, le côté de longueur ''' + str(n1) + ''' cm n'est pas le plus long côté.<br/>
+  Déterminer une équation permettant de choisir la longueur des autres côtés afin que le triangle soit rectangle.'''
+  solution = '''
+  On note x la longueur du plus petit des deux côtés dont la longueur n'est pas connue. L'autre mesure donc (x + ''' + str(ecart) + ''').<br/>
+  La longueur du plus long côté est forcément (x + ''' + str(ecart) + '''), puisque le côté de longueur ''' + str(n1) + ''' n'est pas le plus long.<br/>
+  Afin que le triangle soit rectangle, x doit vérifier, d'après le théorème de Pythagore :<br/>
+  <span style="font-weight: bold">(x + ''' + str(ecart) + ")² = x² + " + str(n1) + "²</span>"
+  return display(statement, solution)
+
+@app.route('/api/exercice/content/16')
+def exercice_16():
+  #Connaitre les IR
+  choice = random.randrange(1,4)
+  if choice == 1:
+    ir = "a² + 2ab + b²"
+    sol = "(a + b)²"
+  elif choice == 2:
+    ir = "a² - 2ab + b²"
+    sol = "(a - b)²"
+  else:
+    ir = "a² - b²"
+    sol = "(a - b)(a + b)"
+  statement = "Factoriser l'expression algébrique " + ir
+  solution = "C'est une identité remarquable, qui se factorise en <span style='font-weight: bold'>" + sol + "</span>"
+  return display(statement, solution)
+
+@app.route('/api/exercice/content/17')
+def exercice_17():
+  #Reconnaitre une IR
+  choice = random.randrange(1,4)
+  numbers = range(1,10)
+  a = random.choice(numbers)
+  b = random.choice(numbers)
+  if choice == 1:
+    exp = str(a*a) + "x² + " + str(2*a*b) + "x + " + str(b*b)
+    inter = "(" + str(a) + "x)² + 2⋅(" + str(a) + "x)⋅" + str(b) + " + " + str(b) + "²"
+    sol = "(" + str(a) + "x + " + str(b) + ")²"
+  elif choice == 2:
+    exp = str(a*a) + "x² - " + str(2*a*b) + "x + " + str(b*b)
+    inter = "(" + str(a) + "x)² - 2⋅(" + str(a) + "x)⋅" + str(b) + " + " + str(b) + "²"
+    sol = "(" + str(a) + "x - " + str(b) + ")²"
+  else:
+    exp = str(a*a) + "x² - " + str(b*b)
+    inter = "(" + str(a) + "x)² - " + str(b) + "²"
+    sol = "(" + str(a) + "x - " + str(b) + ")(" + str(a) + "x + " + str(b) + ")"
+  statement = "Factoriser l'expression algébrique " + exp
+  solution = "C'est une identité remarquable. On peut réécrire l'expression ainsi :<br/>" + inter + "<br/>Elle se factorise en <span style='font-weight: bold'>" + sol + "</span>"
+  return display(statement, solution)
+
+@app.route('/api/exercice/content/18')
+def exercice_18():
+  #Lire un tableau de signes
+  statement= "Cet exercice n'est pas encore disponible"
+  solution = ""
+  return display(statement, solution)

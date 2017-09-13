@@ -22,7 +22,8 @@ chapters=[
     'nb':1,
     'name':u'Expressions algébriques',
     'class_id':1,
-    'color':'#82B1FF'
+    'color':'#82B1FF',
+    'available':True
   },
   {
     'nb':2,
@@ -608,6 +609,76 @@ exercices = [
     'name':"Vrai ou faux ?",
     'difficulty':2,
     'url':'api/exercice/content/8'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':3,
+    'name':"Utiliser la simple distributivité",
+    'difficulty':1,
+    'url':'api/exercice/content/9'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':3,
+    'name':"Utiliser la double distributivité",
+    'difficulty':2,
+    'url':'api/exercice/content/10'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':4,
+    'name':"Factoriser des expressions simples",
+    'difficulty':1,
+    'url':'api/exercice/content/11'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':4,
+    'name':"Factoriser des expressions simples",
+    'difficulty':1,
+    'url':'api/exercice/content/11'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':5,
+    'name':"Somme de nombres entiers consécutifs",
+    'difficulty':2,
+    'url':'api/exercice/content/13'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':5,
+    'name':"L'âge du capitaine",
+    'difficulty':2,
+    'url':'api/exercice/content/14'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':5,
+    'name':"Triangle rectangle",
+    'difficulty':3,
+    'url':'api/exercice/content/15'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':6,
+    'name':"Connaître ses identités remarquables",
+    'difficulty':1,
+    'url':'api/exercice/content/16'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':6,
+    'name':"Reconnaître une identité remarquable",
+    'difficulty':3,
+    'url':'api/exercice/content/17'
+  },
+  {
+    'chapter_id':2,
+    'obj_id':7,
+    'name':"Lire un tableau de signes",
+    'difficulty':1,
+    'url':'api/exercice/content/18'
   },
 ]
 
