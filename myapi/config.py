@@ -3,6 +3,12 @@ import sys
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+#server url
+SERVER = "dev"
+SERVER_URL = "http://localhost:5000/api/"
+if SERVER == "prod":
+  SERVER_URL = "http://37.59.121.89:5000/api/"
+
 #SQLAlchemy DB
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.sqlite')

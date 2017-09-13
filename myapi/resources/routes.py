@@ -50,6 +50,13 @@ def user_get_all():
   users = models.user.User.query.all()
   return jsonify({'result': users}), 201
 
+@app.route('/api/user/<int:user_id>/total_score', methods=['GET'])
+def user_get_total_score(user_id):
+  scores = Score.query.filter_by(user_id=user_id).all()
+  res = 0
+  for score in scores:
+    res += score.score
+  return jsonify({'result': res}), 201
 
 # Chapter routes
 @app.route('/api/chapter/delete_all', methods=['DELETE'])
