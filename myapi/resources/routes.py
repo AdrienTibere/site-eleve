@@ -140,13 +140,13 @@ def get_score(user_id, obj_id):
 @login_required
 @app.route('/api/profile/<int:user_id>', methods=['GET'])
 def profile(user_id):
-  chapter_id = 1
+  chapter_id = 2
   user = models.user.User.query.get(user_id)
-  chapter = ChapterModel.query.get(chapter_id)
-  objectives = ObjectiveModel.query.filter_by(chapter_id=chapter_id)
+  current_chapter = ChapterModel.query.get(chapter_id)
+  current_objectives = ObjectiveModel.query.filter_by(chapter_id=chapter_id)
   #res update the objectives to add scores
   res = []
-  for objective in objectives:
+  for objective in current_objectives:
     score = Score.query.filter_by(objective_id=objective.id, user_id=user.id).first()
     if not score:
       score = {
@@ -155,7 +155,25 @@ def profile(user_id):
         'score': 0
       }
     res.append({'objective': objective, 'score': score})
+  # Adding past chapters
+  chapters = ChapterModel.query.filter(ChapterModel.id.in_(range(0,chapter_id))).order_by(ChapterModel.id.desc()).all()
+  # past_chapters = [{chapter, objectives}, ...]
+  past_chapters = []
+  for chapter in chapters:
+    objectives = ObjectiveModel.query.filter_by(chapter_id=chapter.id)
+    temp = []
+    for objective in objectives:
+      score = Score.query.filter_by(objective_id=objective.id, user_id=user.id).first()
+      if not score:
+        score = {
+          'user': user.to_json(),
+          'objective': objective.to_json(),
+          'score': 0
+        }
+      temp.append({'objective': objective, 'score': score})
+    past_chapters.append({'chapter':chapter.to_json(), 'objectives': temp})
   return jsonify({
-    'current_chapter': chapter.to_json(),
-    'objectives': res
+    'current_chapter': current_chapter.to_json(),
+    'current_objectives': res,
+    'past_chapters': past_chapters
   }), 201

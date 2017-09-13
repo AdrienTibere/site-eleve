@@ -4,50 +4,49 @@ import {server_url} from './config.js';
 import {Link} from 'react-router-dom';
 import fetch from 'isomorphic-fetch';
 import {connect} from 'react-redux';
-import ProfileScore from './ProfileScore'
+import ProfileChapter from './ProfileChapter'
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       current_chapter: {'id': 0},
-      objectives: []
+      current_objectives: [],
+      past_chapters: []
     };
   }
 
   componentDidMount() {
-    // Get current chapter
+    // Get Profile data
     fetch(server_url + 'api/profile/' + this.props.user.id)
     .then(response => response.json())
     .then((json) => {
+      console.log(json);
       this.setState({
         current_chapter: json.current_chapter,
-        objectives: json.objectives});
+        current_objectives: json.current_objectives,
+        past_chapters: json.past_chapters});
     });
-
-    // Get objectives and scores
-
   }
 
   render() {
-    let rows = [];
-    // objectives = [{'objective': blabla, 'score': {objective, user, score}}, ...]
-    this.state.objectives.forEach((obj) => {
-      rows.push(
-        <ProfileScore key={obj.objective.id} chapter={this.state.current_chapter} objective={obj.objective} score={obj.score.score}/>
+    let chapters = [];
+    this.state.past_chapters.forEach((obj) => {
+      chapters.push(
+        <ProfileChapter chapter={obj.chapter} objectives={obj.objectives} />
       )
     });
-
     return (
       <div id="profile">
-        <Link to={{pathname:'/exercices/chapitre/' + this.state.current_chapter.id, state:{chapter:this.state.current_chapter}}}>
-          <div className="big-title" style={{color: this.state.current_chapter.color}}>En ce moment : Chapitre {this.state.current_chapter.nb}, {this.state.current_chapter.name}</div>
-        </Link>
+        <div className="big-title" style={{color: this.state.current_chapter.color}}>En ce moment...</div>
+        <div style={{marginBottom: "30px"}}>
+          <ProfileChapter chapter={this.state.current_chapter} objectives={this.state.current_objectives} />
+        </div>
         <Divider />
-        <div className="big-title" style={{color: this.state.current_chapter.color, display: "inline-flex"}}>Progression des objectifs :</div>
-        <div id="scores-list" style={{display: "inline-flex"}}>
+        <div className="big-title" style={{color: "#82B1FF", display: "flex"}}>Chapitres précédents :</div>
+        <div style={{display: "inline-flex"}}>
           <ul>
-            {rows}
+            {chapters}
           </ul>
         </div>
       </div>

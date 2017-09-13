@@ -9,7 +9,7 @@ delete('http://localhost:5000/api/exercice/delete_all')
 ######## End clean db #########
 
 
-#couleurs : bleu : "#82B1FF", rouge : "#EA80FC", orange : "#FF9E80", vert : "#009688"
+#couleurs : bleu : "#82B1FF", rouge : "#9C27B0", orange : "#FF9E80", vert : "#009688"
 chapters=[
   {
     'nb':0,
@@ -29,7 +29,7 @@ chapters=[
     'nb':2,
     'name':u"Structure d'un algorithme",
     'class_id':1,
-    'color':'#EA80FC'
+    'color':'#9C27B0'
   },
   {
     'nb':3,
@@ -47,7 +47,7 @@ chapters=[
     'nb':5,
     'name':u"Algorithmie : boucles et itérateurs",
     'class_id':1,
-    'color':'#EA80FC'
+    'color':'#9C27B0'
   },
   {
     'nb':6,
@@ -65,7 +65,7 @@ chapters=[
     'nb':8,
     'name':u"Algorithmie : notion de fonction",
     'class_id':1,
-    'color':'#EA80FC'
+    'color':'#9C27B0'
   },
   {
     'nb':9,
